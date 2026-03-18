@@ -1,0 +1,26 @@
+{
+    "name": "bagisto/laravel-abandoncart",
+    "license": "MIT",
+    "description": "Abandon Cart",
+    "authors": [
+        {
+            "name": "Bagisto",
+            "email": "support@bagisto.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Webkul\\AbandonCart\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Webkul\\AbandonCart\\Providers\\AbandonCartServiceProvider"
+            ],
+            "aliases": {}
+        }
+    },
+    "minimum-stability": "dev"
+}

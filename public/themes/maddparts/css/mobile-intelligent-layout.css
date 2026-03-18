@@ -1,0 +1,213 @@
+/* Clean Mobile Layout - 2 Column Grid */
+
+/* Mobile: 2-column card layout */
+@media (max-width: 767px) {
+    /* Force 2-column grid on mobile */
+    #productsList > div[class*="col-"] {
+        flex: 0 0 50%;
+        max-width: 50%;
+        padding: 6px !important;
+    }
+
+    /* Compact card styling */
+    .product-card {
+        border: none;
+        border-radius: 12px;
+        overflow: hidden;
+        background: #fff;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        transition: all 0.3s ease;
+    }
+
+    .product-card:active {
+        box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+        transform: translateY(-2px);
+    }
+
+    /* Image container - fixed aspect ratio */
+    .product-image-wrapper {
+        position: relative;
+        padding-top: 100%;
+        background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+        overflow: hidden;
+        border-bottom: 1px solid #f0f0f0;
+    }
+
+    .product-image-wrapper img {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        max-width: 85%;
+        max-height: 85%;
+        width: auto;
+        height: auto;
+        object-fit: contain;
+    }
+
+    .product-image-wrapper .product-logo {
+        opacity: 0.25;
+        max-width: 65%;
+        max-height: 65%;
+    }
+
+    /* Product info - minimal padding */
+    .product-info {
+        padding: 10px;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+    }
+
+    /* Product name - 2 lines max with ellipsis */
+    .product-name {
+        font-size: 13px;
+        line-height: 1.4;
+        margin: 0;
+        font-weight: 600;
+        color: #2c3e50;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        min-height: 36px;
+    }
+
+    .product-name a {
+        color: #2c3e50;
+        text-decoration: none;
+        transition: color 0.2s ease;
+    }
+
+    .product-card:active .product-name a {
+        color: #E13124;
+    }
+
+    /* Hide SKU on mobile */
+    .product-sku {
+        display: none !important;
+    }
+
+    /* Hide price on mobile */
+    .product-price {
+        display: none !important;
+    }
+
+    /* Hide button on mobile */
+    .view-product-btn {
+        display: none !important;
+    }
+
+    /* Hide sale badge on mobile for cleaner look */
+    .sale-badge {
+        display: none !important;
+    }
+    
+    /* Hide filters sidebar on mobile or make it collapsible */
+    .filters-sidebar-enhanced {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        height: 100vh;
+        width: 85%;
+        max-width: 320px;
+        background: #fff;
+        z-index: 1050;
+        transition: left 0.3s ease;
+        overflow-y: auto;
+        box-shadow: 2px 0 8px rgba(0,0,0,0.2);
+    }
+    
+    .filters-sidebar-enhanced.open {
+        left: 0;
+    }
+    
+    /* Clean flex layout for products */
+    #productsList {
+        display: flex;
+        flex-wrap: wrap;
+        align-content: flex-start;
+        margin: 0 -6px;
+    }
+
+    /* Ensure equal height cards in 2-column layout */
+    #productsList > div[class*="col-"] {
+        margin-bottom: 12px;
+    }
+
+    /* Make entire card clickable area */
+    .product-card .product-image-wrapper .product-link,
+    .product-card .product-info .product-name a {
+        display: block;
+    }
+
+    /* Stock status badge */
+    .stock-status {
+        display: none !important;
+    }
+    
+    /* Loading states */
+    .lazy-image {
+        filter: blur(5px);
+        transition: filter 0.3s ease;
+    }
+    
+    .lazy-image.loaded {
+        filter: blur(0);
+    }
+    
+    /* Pagination hidden message */
+    .pagination-wrapper {
+        display: none !important;
+    }
+    
+    /* Infinite scroll indicators - Amazon style */
+    #infinite-scroll-loader {
+        grid-column: 1 / -1;
+        width: 100%;
+    }
+    
+    #infinite-scroll-loader .spinner-border {
+        width: 30px;
+        height: 30px;
+        border-width: 3px;
+        color: #ff9900;
+    }
+    
+    #infinite-scroll-end {
+        grid-column: 1 / -1;
+        width: 100%;
+        font-size: 14px;
+    }
+}
+
+/* Very small phones - single column with larger cards */
+@media (max-width: 360px) {
+    #productsList > div[class*="col-"] {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+    
+    .product-image-wrapper {
+        padding-top: 75%; /* Wider aspect ratio for single column */
+    }
+    
+    .product-name {
+        font-size: 14px;
+        -webkit-line-clamp: 3;
+        min-height: 54px;
+    }
+}
+
+/* Tablet: 3-column layout */
+@media (min-width: 768px) and (max-width: 991px) {
+    #productsList > div[class*="col-"] {
+        flex: 0 0 33.333%;
+        max-width: 33.333%;
+    }
+}

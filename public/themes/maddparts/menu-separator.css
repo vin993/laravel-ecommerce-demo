@@ -1,0 +1,13 @@
+/* Menu separator styles */
+.menu-separator {
+    width: 1px;
+    height: 24px;
+    background-color: #E9E9E9;
+    margin: 0;
+    align-self: center;
+}
+
+header#site-header section#menubar nav.navbar #main-menu ul.navbar-nav {
+    display: flex;
+    align-items: stretch;
+}

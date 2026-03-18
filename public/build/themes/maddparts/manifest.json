@@ -1,0 +1,13 @@
+{
+  "resources/themes/maddparts/assets/css/app.css": {
+    "file": "assets/app-BFAFWAZI.css",
+    "src": "resources/themes/maddparts/assets/css/app.css",
+    "isEntry": true
+  },
+  "resources/themes/maddparts/assets/js/app.js": {
+    "file": "assets/app-LuGXG8k3.js",
+    "name": "app",
+    "src": "resources/themes/maddparts/assets/js/app.js",
+    "isEntry": true
+  }
+}

@@ -1,0 +1,78 @@
+--- a/app/Http/Controllers/Shop/VehicleFitmentController.php
++++ b/app/Http/Controllers/Shop/VehicleFitmentController.php
+@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
+ use Illuminate\Http\Request;
+ use Illuminate\Support\Facades\DB;
+ use Illuminate\Support\Facades\Cache;
++use App\Services\ProductCountCacheService;
+ use Webkul\Product\Models\ProductFlat;
+ use Webkul\Category\Models\Category;
+
+@@ -478,7 +479,28 @@ class VehicleFitmentController extends Controller
+                 $query->orderBy('name', 'asc');
+         }
+
+-        $total = $query->count();
++        // Cache the expensive count() query with Redis
++        $cacheService = app(ProductCountCacheService::class);
++        $cacheKey = $cacheService->generateVehicleCountKey([
++            'vehicleType' => $vehicleType,
++            'vehicleMake' => $vehicleMake,
++            'vehicleModel' => $vehicleModel,
++            'vehicleYear' => $vehicleYear,
++            'productIds' => $productIds,
++            'brands' => $brands,
++            'categories' => $categories,
++            'minPrice' => $minPrice,
++            'maxPrice' => $maxPrice,
++            'inStock' => $inStock,
++            'sortBy' => $sortBy,
++        ]);
++
++        $total = $cacheService->remember(
++            $cacheKey,
++            function() use ($query) {
++                return $query->count();
++            }
++        );
++
+         $products = $query->skip(($page - 1) * $perPage)
+             ->take($perPage)
+             ->get();
+@@ -250,13 +271,29 @@ class VehicleFitmentController extends Controller
+             })
+             ->get()
+             ->map(function ($cat) use ($productIds) {
+                 $translation = $cat->translations->where('locale', 'en')->first();
+-                $productCount = ProductFlat::where('channel', 'maddparts')
+-                    ->where('locale', 'en')
+-                    ->whereHas('product.categories', function ($q) use ($cat) {
+-                        $q->where('category_id', $cat->id);
+-                    })
+-                    ->whereIn('product_id', $productIds)
+-                    ->count();
++
++                // Cache category count query
++                $cacheService = app(ProductCountCacheService::class);
++                $cacheKey = $cacheService->generateCategoryCountKey(
++                    $cat->id,
++                    $productIds,
++                    'maddparts',
++                    'en'
++                );
++
++                $productCount = $cacheService->remember(
++                    $cacheKey,
++                    function() use ($cat, $productIds) {
++                        return ProductFlat::where('channel', 'maddparts')
++                            ->where('locale', 'en')
++                            ->whereHas('product.categories', function ($q) use ($cat) {
++                                $q->where('category_id', $cat->id);
++                            })
++                            ->whereIn('product_id', $productIds)
++                            ->count();
++                    }
++                );
+
+                 return (object)[
+                     'id' => $cat->id,

@@ -1,0 +1,10 @@
+{
+  "resources/css/app.css": {
+    "file": "styles.css",
+    "isEntry": true
+  },
+  "resources/js/app.js": {
+    "file": "script.js",
+    "isEntry": true
+  }
+}
